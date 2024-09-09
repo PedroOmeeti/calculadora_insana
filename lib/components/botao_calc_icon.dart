@@ -7,17 +7,15 @@ class BotaoCalcIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
+     return FloatingActionButton.large(
+      backgroundColor: corFundo,
+      onPressed: () {}, 
+      child: Icon(icon,
+        color: Colors.white,
+        size: 40,
         
-        color: corFundo,  
-
       ),
-      child: IconButton(
-        onPressed: () {},
-        icon: Icon(icon, color: Colors.white, size: 40),
-      ),
+      
     );
   }
 }

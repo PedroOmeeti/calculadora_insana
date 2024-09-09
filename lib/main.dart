@@ -40,14 +40,51 @@ class Calculadora extends StatefulWidget {
 class _CalculadoraState extends State<Calculadora> {
   // TextEditingController _controlerDisplay = TextEditingController();
 String display = 'Teste aqui2';
-void clearDisplay() {
+void clearDisplay(String btnText) {
   setState(() {
-    display = '0';
-    print('cliquei no AC');
-    
+    display = '0';    
   });
-  
+
+ 
 }
+  void calcular(String btnText) {
+    setState(() {
+      if(display == '0' || display == '' || display == 'Erro') {
+        display = '';
+      }
+      display+=btnText;
+      
+      
+      
+      
+    });   
+  }
+
+void btnResultado(String btnText) {
+  try {
+  setState(() {
+
+      final operador = RegExp(r'[+-/x]').firstMatch(display)?.group(0);
+      String n1 = display.substring(0, display.indexOf(RegExp(r'[+\-/x]')));
+      String n2 = display.substring((display.indexOf(RegExp(r'[+\-/x]')) + 1));
+      print('clicou');
+      display = '';
+      switch (operador) {
+        case '+': display = (int.parse(n1) + int.parse(n2)).toString();
+        case '-': display = (int.parse(n1) - int.parse(n2)).toString();
+        case 'x': display = (int.parse(n1) * int.parse(n2)).toString();
+        case '/': display = (int.parse(n1) / int.parse(n2)).toString();
+        case '%': display = (int.parse(n1) % int.parse(n2)).toString();
+
+      }
+  });
+  } catch (e) {
+    setState(() {
+      display = 'Erro';
+    });
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -84,49 +121,44 @@ void clearDisplay() {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [   
-                GestureDetector( 
-                  behavior: HitTestBehavior.translucent,                 
-                  onTap: () => {                    
-                      clearDisplay(),
-                      print('GESTURE DENTRO')                    ,
-                  },
-                  child: BotaoCalc(texto: 'AC', corFundo: Color.fromARGB(255, 8, 112, 22))
-                ),
-                BotaoCalc(texto: '()', corFundo: Color.fromARGB(255, 67, 81, 202)),
-                BotaoCalc(texto: '%', corFundo: Color.fromARGB(255, 67, 81, 202)),
-                BotaoCalc(texto: '/', corFundo: Color.fromARGB(255, 67, 81, 202)),
+                
+                BotaoCalc(texto: 'AC', corFundo: Color.fromARGB(255, 8, 112, 22), onPressed: clearDisplay),
+                BotaoCalc(texto: '()', corFundo: Color.fromARGB(255, 67, 81, 202), onPressed: calcular),
+                BotaoCalc(texto: '%', corFundo: Color.fromARGB(255, 67, 81, 202), onPressed: calcular),
+                BotaoCalc(texto: '/', corFundo: Color.fromARGB(255, 67, 81, 202), onPressed: calcular),
             ],),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BotaoCalc(texto: '7', corFundo: Color.fromARGB(255, 37, 37, 37)),
-                BotaoCalc(texto: '8', corFundo: Color.fromARGB(255, 37, 37, 37)),
-                BotaoCalc(texto: '9', corFundo: Color.fromARGB(255, 37, 37, 37)),
-                BotaoCalc(texto: 'x', corFundo: Color.fromARGB(255, 67, 81, 202)),          
+
+                BotaoCalc(texto: '7', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),            
+                BotaoCalc(texto: '8', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),
+                BotaoCalc(texto: '9', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),
+                BotaoCalc(texto: 'x', corFundo: Color.fromARGB(255, 67, 81, 202), onPressed: calcular),          
             ],),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BotaoCalc(texto: '4', corFundo: Color.fromARGB(255, 37, 37, 37)),
-                BotaoCalc(texto: '5', corFundo: Color.fromARGB(255, 37, 37, 37)),
-                BotaoCalc(texto: '6', corFundo: Color.fromARGB(255, 37, 37, 37)),
-                BotaoCalc(texto: '-', corFundo: Color.fromARGB(255, 67, 81, 202)),
+                BotaoCalc(texto: '4', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),
+                BotaoCalc(texto: '5', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),
+                BotaoCalc(texto: '6', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),
+                BotaoCalc(texto: '-', corFundo: Color.fromARGB(255, 67, 81, 202), onPressed: calcular),
             ],),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BotaoCalc(texto: '1', corFundo: Color.fromARGB(255, 37, 37, 37)),
-                BotaoCalc(texto: '2', corFundo: Color.fromARGB(255, 37, 37, 37)),
-                BotaoCalc(texto: '3', corFundo: Color.fromARGB(255, 37, 37, 37)),
-                BotaoCalc(texto: '+', corFundo: Color.fromARGB(255, 67, 81, 202)),
+                BotaoCalc(texto: '1', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),
+                BotaoCalc(texto: '2', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),
+                BotaoCalc(texto: '3', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),
+                BotaoCalc(texto: '+', corFundo: Color.fromARGB(255, 67, 81, 202), onPressed: calcular),
             ],),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                BotaoCalc(texto: '0', corFundo: Color.fromARGB(255, 37, 37, 37)),
-                BotaoCalc(texto: ',', corFundo: Color.fromARGB(255, 37, 37, 37)),
+                BotaoCalc(texto: '0', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),
+                BotaoCalc(texto: ',', corFundo: Color.fromARGB(255, 37, 37, 37), onPressed: calcular),
                 BotaoCalcIcon(corFundo: Color.fromARGB(255, 37, 37, 37), icon: Icons.backspace),
-                BotaoCalc(texto: '=', corFundo: Color.fromARGB(255, 45, 59, 185)),
+                BotaoCalc(texto: '=', corFundo: Color.fromARGB(255, 45, 59, 185), onPressed: btnResultado),
             ],),
         
       
